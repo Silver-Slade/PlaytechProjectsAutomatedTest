@@ -48,9 +48,9 @@ pipeline {
       steps {
         script {
           if (isUnix()) {
-            sh 'npm --workspace=@qa/framework run build'
+            sh 'npx -W tsc -p packages/framework/tsconfig.json'
           } else {
-            bat 'npm --workspace=@qa/framework run build'
+            bat 'npx -W tsc -p packages\\framework\\tsconfig.json'
           }
         }
       }
