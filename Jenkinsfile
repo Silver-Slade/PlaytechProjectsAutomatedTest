@@ -52,9 +52,9 @@ pipeline {
         script {
           dir("packages/${params.PROJECT}") {
             if (isUnix()) {
-              sh 'npm run test -- --reporter=junit,html'
+              sh 'npm run test -- --reporter=junit,html --output=test-results'
             } else {
-              bat 'npm run test -- --reporter=junit,html'
+              bat 'npm run test -- --reporter=junit,html --output=test-results'
             }
           }
         }
