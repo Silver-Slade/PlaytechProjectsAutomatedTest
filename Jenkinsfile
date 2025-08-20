@@ -48,9 +48,9 @@ pipeline {
       steps {
         script {
           if (isUnix()) {
-            sh 'npx -W tsc -p packages/framework/tsconfig.json'
+            sh 'npx -W tsc -- -p packages/framework/tsconfig.json'
           } else {
-            bat 'npx -W tsc -p packages\\framework\\tsconfig.json'
+            bat 'npx -W tsc -- -p packages\\framework\\tsconfig.json'
           }
         }
       }
