@@ -3,13 +3,12 @@ pipeline {
 
   parameters {
     string(name: 'BRANCH',  defaultValue: 'main', description: 'Rama del repositorio a ejecutar')
-    choice(name: 'PROJECT', choices: ['recargame'], description: 'Paquete/proyecto a probar (packages/<PROJECT>)')
-    // Future implementation -> choice(name: 'SUITE', choices: ['all','admin','seller'], description: 'Sub-suite del proyecto')
+    choice(name: 'PROJECT', choices: ['recargame'], description: 'Paquete/proyecto (packages/<PROJECT>)')
+    // Future implementation: choice(name: 'SUITE', choices: ['all','admin','seller'], description: 'Sub-suite opcional')
   }
 
   options {
     timestamps()
-    ansiColor('xterm')
     buildDiscarder(logRotator(numToKeepStr: '20'))
     timeout(time: 30, unit: 'MINUTES')
   }
@@ -47,15 +46,23 @@ pipeline {
       }
     }
 
-    stage('Run tests (workspace)') {
+    stage('Run tests (project via root)') {
       steps {
         script {
-          dir("packages/${params.PROJECT}") {
-            if (isUnix()) {
-              sh 'npm run test -- --reporter=junit,html --output=test-results'
-            } else {
-              bat 'npm run test -- --reporter=junit,html --output=test-results'
-            }
+          if (isUnix()) {
+            sh """
+              npx -W playwright test \
+                --config=packages/${params.PROJECT}/playwright.config.ts \
+                --reporter=junit,html \
+                --output=packages/${params.PROJECT}/test-results
+            """
+          } else {
+            bat """
+              npx -W playwright test ^
+                --config=packages/${params.PROJECT}/playwright.config.ts ^
+                --reporter=junit,html ^
+                --output=packages/${params.PROJECT}/test-results
+            """
           }
         }
       }
