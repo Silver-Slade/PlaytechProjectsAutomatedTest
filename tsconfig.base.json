@@ -7,7 +7,8 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@framework/*": ["packages/framework/src/*"]
+      "@qa/framework": ["packages/framework/src/index.ts"],
+      "@qa/framework/*": ["packages/framework/src/*"]
     },
     "types": ["node"]
   }

@@ -12,10 +12,10 @@
     "clean:report": "rimraf playwright-report test-results"
   },
   "dependencies": {
-    "@qa/framework": "0.1.0"
+    "@qa/framework": "workspace:*"
   },
   "devDependencies": {
-    "@playwright/test": "^1.48.0",
+    "@playwright/test": "^1.55.0",
     "typescript": "^5.0.0",
     "dotenv-cli": "^7.4.0",
     "rimraf": "^5.0.0"

@@ -13,9 +13,7 @@ pipeline {
     timeout(time: 30, unit: 'MINUTES')
   }
 
-  tools {
-    nodejs 'node-22'
-  }
+  tools { nodejs 'node-22' }
 
   stages {
     stage('Checkout') {
@@ -46,6 +44,18 @@ pipeline {
       }
     }
 
+    stage('Build framework') {
+      steps {
+        script {
+          if (isUnix()) {
+            sh 'npm --workspace=@qa/framework run build'
+          } else {
+            bat 'npm --workspace=@qa/framework run build'
+          }
+        }
+      }
+    }
+
     stage('Run tests (project via root)') {
       steps {
         script {
@@ -69,7 +79,6 @@ pipeline {
       post {
         always {
           junit allowEmptyResults: true, testResults: "packages/${params.PROJECT}/test-results/*.xml"
-
           publishHTML(target: [
             reportDir: "packages/${params.PROJECT}/playwright-report",
             reportFiles: 'index.html',
@@ -78,7 +87,6 @@ pipeline {
             alwaysLinkToLastBuild: true,
             allowMissing: true
           ])
-
           archiveArtifacts artifacts: "packages/${params.PROJECT}/test-results/**, packages/${params.PROJECT}/playwright-report/**",
                            fingerprint: true, allowEmptyArchive: true
         }
@@ -86,9 +94,5 @@ pipeline {
     }
   }
 
-  post {
-    always {
-      cleanWs(deleteDirs: true, notFailBuild: true)
-    }
-  }
+  post { always { cleanWs(deleteDirs: true, notFailBuild: true) } }
 }
