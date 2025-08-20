@@ -1,5 +1,5 @@
 export const Titles = {
-  adminDashboard: 'Bienvenido',
+  adminDashboard: 'Balance',
   sellerHome: 'Venta de Recargas',
   pleaseWaitPopUp: 'Por favor espere...'
 } as const;
