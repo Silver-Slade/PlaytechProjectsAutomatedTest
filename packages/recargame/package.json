@@ -1,0 +1,21 @@
+{
+  "name": "@qa/recargame",
+  "version": "0.1.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "dotenv -e .env -- playwright test",
+    "test:admin": "dotenv -e .env -- playwright test --project=admin",
+    "test:seller": "dotenv -e .env -- playwright test --project=seller",
+    "report": "playwright show-report"
+  },
+  "dependencies": {
+    "@qa/framework": "0.1.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.0",
+    "typescript": "^5.0.0",
+    "dotenv-cli": "^7.4.0"
+  }
+}

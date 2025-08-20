@@ -1,0 +1,15 @@
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+npm-debug.log*
+yarn.lock
+pnpm-lock.yaml
+*.zip
+.env
+.env.*
+packages/*/.env
+packages/*/.env.*
+!packages/*/.env.example
+!.env.example

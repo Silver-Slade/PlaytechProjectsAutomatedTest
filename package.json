@@ -1,0 +1,31 @@
+{
+  "name": "playtechprojectsautomatedtest",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Silver-Slade/PlaytechProjectsAutomatedTest.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Silver-Slade/PlaytechProjectsAutomatedTest/issues"
+  },
+  "homepage": "https://github.com/Silver-Slade/PlaytechProjectsAutomatedTest#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.54.2",
+    "dotenv-cli": "^10.0.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.20.4",
+    "typescript": "^5.9.2"
+  }
+}
