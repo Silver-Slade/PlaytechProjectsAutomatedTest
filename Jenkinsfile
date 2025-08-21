@@ -40,20 +40,22 @@ pipeline {
             npx -W playwright install --with-deps
           '''
           } else {
+            bat 'set NPM_CONFIG_PRODUCTION=false'
+            bat 'set NODE_ENV=development'
+            bat 'npm ci'
+
             bat '''
-              set NPM_CONFIG_PRODUCTION=false && ^
-              set NODE_ENV=development && ^
-              npm ci && ^
-              IF EXIST node_modules\\typescript\\bin\\tsc.cmd ( ^
-                echo TypeScript ya está instalado. ^
-              ) ELSE ( ^
-                echo Installing missing TypeScript... ^
-                npm install --save-dev typescript ^
-              ) && ^
-              npm list typescript || echo "TypeScript no está instalado" && ^
-              npx -W tsc --version && ^
-              npx -W playwright install
+              IF EXIST node_modules\\typescript\\bin\\tsc.cmd (
+                echo TypeScript ya está instalado.
+              ) ELSE (
+                echo Installing missing TypeScript...
+                npm install --save-dev typescript
+              )
             '''
+
+            bat 'npm list typescript || echo "TypeScript no está instalado"'
+            bat 'npx -W tsc --version'
+            bat 'npx -W playwright install'
           }
         }
       }
@@ -69,8 +71,8 @@ pipeline {
             '''
           } else {
             bat '''
-            npm list typescript || echo TS not found
-            npx tsc --version || echo npx tsc failed
+              npm list typescript || echo TS not found
+              npx tsc --version || echo npx tsc failed
             '''
           }
         }
