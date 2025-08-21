@@ -29,40 +29,29 @@ pipeline {
             sh '''
             node -v
             npm -v
-            # *** Asegura que se instalen devDependencies ***
             export NPM_CONFIG_PRODUCTION=false
             export NODE_ENV=development
             npm ci
-            sh 'npm list typescript || echo "TypeScript no está instalado"'
+            npm list typescript || echo "TypeScript no está instalado"
             npx -W tsc --version
 
-            # Verificación: debe imprimir versión de TypeScript
             npx -W typescript --version
 
             npx -W playwright install --with-deps
           '''
           } else {
-            bat """
-              node -v
-              npm -v
-              REM *** Asegura que se instalen devDependencies ***
-              set NPM_CONFIG_PRODUCTION=false
-              set NODE_ENV=development
-              npm ci
-
+            bat '''
+              set NPM_CONFIG_PRODUCTION=false && ^
+              set NODE_ENV=development && ^
+              npm ci && ^
               IF NOT EXIST node_modules\\typescript\\bin\\tsc.cmd (
-                echo Installing missing TypeScript...
+                echo Installing missing TypeScript... && ^
                 npm install --save-dev typescript
-              )
-
-              sh 'npm list typescript || echo "TypeScript no está instalado"'
-              npx -W tsc --version
-
-              REM Verificación: debe imprimir versión de TypeScript
-              npx -W typescript --version
-
+              ) && ^
+              npm list typescript || echo "TypeScript no está instalado" && ^
+              npx -W tsc --version && ^
               npx -W playwright install
-            """
+            '''
           }
         }
       }
