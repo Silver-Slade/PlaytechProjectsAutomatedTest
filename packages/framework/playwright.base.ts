@@ -8,7 +8,7 @@ const baseConfig = defineConfig({
     screenshot: 'only-on-failure',
     //video: 'retain-on-failure',
     baseURL: process.env.BASE_URL,
-    headless: false,
+    headless: true,
     viewport: { width: 1280, height: 720 }
   },
   reporter: [['html', { outputFolder: 'playwright-report', open: 'never' }]],
