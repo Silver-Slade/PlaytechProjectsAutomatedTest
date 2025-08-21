@@ -49,6 +49,12 @@ pipeline {
               set NPM_CONFIG_PRODUCTION=false
               set NODE_ENV=development
               npm ci
+
+              IF NOT EXIST node_modules\\typescript\\bin\\tsc.cmd (
+                echo Installing missing TypeScript...
+                npm install --save-dev typescript
+              )
+
               sh 'npm list typescript || echo "TypeScript no está instalado"'
               npx -W tsc --version
 
