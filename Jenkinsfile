@@ -33,6 +33,7 @@ pipeline {
             export NPM_CONFIG_PRODUCTION=false
             export NODE_ENV=development
             npm ci
+            npx -W tsc --version
 
             # Verificación: debe imprimir versión de TypeScript
             npx -W typescript --version
@@ -47,6 +48,7 @@ pipeline {
               set NPM_CONFIG_PRODUCTION=false
               set NODE_ENV=development
               npm ci
+              npx -W tsc --version
 
               REM Verificación: debe imprimir versión de TypeScript
               npx -W typescript --version
@@ -62,9 +64,9 @@ pipeline {
       steps {
         script {
           if (isUnix()) {
-            sh 'node node_modules/typescript/bin/tsc -- -p packages/framework/tsconfig.json'
+            sh 'npx -W tsc -p packages/framework/tsconfig.json'
           } else {
-            bat 'node node_modules\\typescript\\bin\\tsc -- -p packages\\framework\\tsconfig.json'
+            bat 'npx -W tsc -p packages\\framework\\tsconfig.json'
           }
         }
       }
