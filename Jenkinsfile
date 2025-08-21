@@ -29,14 +29,14 @@ pipeline {
             sh '''
               node -v
               npm -v
-              npm ci
+              npm ci --include=dev
               npx -W playwright install --with-deps
             '''
           } else {
             bat """
               node -v
               npm -v
-              npm ci
+              npm ci --include=dev
               npx -W playwright install
             """
           }
