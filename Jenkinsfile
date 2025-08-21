@@ -33,6 +33,7 @@ pipeline {
             export NPM_CONFIG_PRODUCTION=false
             export NODE_ENV=development
             npm ci
+            sh 'npm list typescript || echo "TypeScript no está instalado"'
             npx -W tsc --version
 
             # Verificación: debe imprimir versión de TypeScript
@@ -48,6 +49,7 @@ pipeline {
               set NPM_CONFIG_PRODUCTION=false
               set NODE_ENV=development
               npm ci
+              sh 'npm list typescript || echo "TypeScript no está instalado"'
               npx -W tsc --version
 
               REM Verificación: debe imprimir versión de TypeScript
@@ -55,6 +57,24 @@ pipeline {
 
               npx -W playwright install
             """
+          }
+        }
+      }
+    }
+
+    stage('Debug TypeScript') {
+      steps {
+        script {
+          if (isUnix()) {
+            sh '''
+              npm list typescript || echo "TS not found"
+              npx tsc --version || echo "npx tsc failed"
+            '''
+          } else {
+            bat '''
+            npm list typescript || echo TS not found
+            npx tsc --version || echo npx tsc failed
+            '''
           }
         }
       }
