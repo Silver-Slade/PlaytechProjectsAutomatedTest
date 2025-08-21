@@ -9,7 +9,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm -ws run build"
+    "build": "npm -ws run build",
+    "build:framework": "tsc -p packages/framework/tsconfig.json"
   },
   "repository": {
     "type": "git",
