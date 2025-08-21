@@ -27,16 +27,30 @@ pipeline {
         script {
           if (isUnix()) {
             sh '''
-              node -v
-              npm -v
-              npm ci --include=dev
-              npx -W playwright install --with-deps
-            '''
+            node -v
+            npm -v
+            # *** Asegura que se instalen devDependencies ***
+            export NPM_CONFIG_PRODUCTION=false
+            export NODE_ENV=development
+            npm ci
+
+            # Verificación: debe imprimir versión de TypeScript
+            npx -W typescript --version
+
+            npx -W playwright install --with-deps
+          '''
           } else {
             bat """
               node -v
               npm -v
-              npm ci --include=dev
+              REM *** Asegura que se instalen devDependencies ***
+              set NPM_CONFIG_PRODUCTION=false
+              set NODE_ENV=development
+              npm ci
+
+              REM Verificación: debe imprimir versión de TypeScript
+              npx -W typescript --version
+
               npx -W playwright install
             """
           }

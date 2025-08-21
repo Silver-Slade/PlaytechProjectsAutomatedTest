@@ -12,7 +12,7 @@
     "clean:report": "rimraf playwright-report test-results"
   },
   "dependencies": {
-    "@qa/framework": "workspace:*"
+    "@qa/framework": "0.1.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.55.0",
