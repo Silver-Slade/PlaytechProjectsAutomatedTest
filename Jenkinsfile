@@ -108,9 +108,9 @@ pipeline {
           ]) {
           if (isUnix()) {
             sh '''
-              rm -f packages/${params.PROJECT}/.env
-
-              cat > packages/${params.PROJECT}/.env <<EOF
+              test -d "packages/$PROJECT" || { echo "No existe packages/$PROJECT"; exit 1; }
+              rm -f packages/$PROJECT/.env
+              cat > packages/$PROJECT/.env <<EOF
               BASE_URL_ADMIN=${params.BASE_URL_ADMIN}
               BASE_URL_SELLER=${params.BASE_URL_SELLER}
               USERNAME_ADMIN=$ADM_USER
@@ -121,15 +121,19 @@ pipeline {
             '''
           } else {
             bat '''
-              if exist packages\\${params.PROJECT}\\.env del /q packages\\${params.PROJECT}\\.env
+              if not exist "packages\\%PROJECT%" (
+                echo No existe packages\\%PROJECT%
+                exit /b 1
+              )
+              if exist "packages\\%PROJECT%\\.env" del /q "packages\\%PROJECT%\\.env"
 
-              (echo BASE_URL_ADMIN=${params.BASE_URL_ADMIN})  >  packages\\${params.PROJECT}\\.env
-              (echo BASE_URL_SELLER=${params.BASE_URL_SELLER})>> packages\\${params.PROJECT}\\.env
-              (echo USERNAME_ADMIN=%ADM_USER%)               >> packages\\${params.PROJECT}\\.env
-              (echo PASSWORD_ADMIN=%ADM_PASS%)               >> packages\\${params.PROJECT}\\.env
-              (echo USERNAME_SELLER=%SEL_USER%)              >> packages\\${params.PROJECT}\\.env
-              (echo PASSWORD_SELLER=%SEL_PASS%)              >> packages\\${params.PROJECT}\\.env
-            '''
+                >  "packages\\%PROJECT%\\.env" echo BASE_URL_ADMIN=%BASE_URL_ADMIN%
+                >> "packages\\%PROJECT%\\.env" echo BASE_URL_SELLER=%BASE_URL_SELLER%
+                >> "packages\\%PROJECT%\\.env" echo USERNAME_ADMIN=%ADM_USER%
+                >> "packages\\%PROJECT%\\.env" echo PASSWORD_ADMIN=%ADM_PASS%
+                >> "packages\\%PROJECT%\\.env" echo USERNAME_SELLER=%SEL_USER%
+                >> "packages\\%PROJECT%\\.env" echo PASSWORD_SELLER=%SEL_PASS%
+          '''
           }
         }
       }
