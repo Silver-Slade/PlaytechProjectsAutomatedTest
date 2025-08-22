@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "type": "commonjs",
-  "main": "dist/index.js",
-  "files": ["dist", "src"],
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "files": ["dist"],
   "scripts": { "build": "tsc -p tsconfig.json" },
   "devDependencies": {
-    "typescript": "^5.0.0",
-    "@playwright/test": "^1.48.0"
+    "typescript": "^5.9.2",
+    "@playwright/test": "^1.55.0"
   }
 }

@@ -1,6 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 
-export default defineConfig({
+const baseConfig = defineConfig({
   timeout: 30_000,
   expect: { timeout: 5_000 },
   use: {
@@ -8,7 +8,7 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     //video: 'retain-on-failure',
     baseURL: process.env.BASE_URL,
-    headless: false,
+    headless: true,
     viewport: { width: 1280, height: 720 }
   },
   reporter: [['html', { outputFolder: 'playwright-report', open: 'never' }]],
@@ -17,3 +17,5 @@ export default defineConfig({
     { name: 'firefox',  use: { ...devices['Desktop Firefox'] } }
   ]
 });
+
+export default baseConfig;

@@ -1,4 +1,4 @@
-import baseConfig from '@qa/framework/playwright.base';
+import { baseConfig } from '@qa/framework';
 import { defineConfig, devices } from '@playwright/test';
 import * as path from 'path';
 import * as dotenv from 'dotenv';

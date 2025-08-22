@@ -5,17 +5,19 @@
   "type": "commonjs",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "test": "dotenv -e .env -- playwright test",
-    "test:admin": "dotenv -e .env -- playwright test --project=admin",
-    "test:seller": "dotenv -e .env -- playwright test --project=seller",
-    "report": "playwright show-report"
+    "test": "playwright test",
+    "test:admin": "playwright test --project=admin",
+    "test:seller": "playwright test --project=seller",
+    "report": "playwright show-report playwright-report",
+    "clean:report": "rimraf playwright-report test-results"
   },
   "dependencies": {
     "@qa/framework": "0.1.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.48.0",
-    "typescript": "^5.0.0",
-    "dotenv-cli": "^7.4.0"
+    "@playwright/test": "^1.55.0",
+    "typescript": "^5.9.2",
+    "dotenv-cli": "^7.4.0",
+    "rimraf": "^5.0.0"
   }
 }
