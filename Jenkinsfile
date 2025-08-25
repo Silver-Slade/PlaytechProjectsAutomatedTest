@@ -133,7 +133,7 @@ pipeline {
                 >> "packages\\%PROJECT%\\.env" echo PASSWORD_ADMIN=%ADM_PASS%
                 >> "packages\\%PROJECT%\\.env" echo USERNAME_SELLER=%SEL_USER%
                 >> "packages\\%PROJECT%\\.env" echo PASSWORD_SELLER=%SEL_PASS%
-          '''
+            '''
           }
         }
       }
