@@ -18,7 +18,7 @@ test('REC-000002 Login with a non existent administrator user', async ({ page })
     await adminLoginPage.submitButton.click();
     await expect(adminLoginPage.dashboardTitle).toHaveCount(0);
     await expect(adminLoginPage.alertPopUpTitle).toHaveText('[Error 640]');
-    await expect(adminLoginPage.alertPopUpContent).toContainText(' Descripción: El usuario esta inactivo o no existe dentro del sistema. Por favor,' +
+    await expect(adminLoginPage.alertPopUpContent).toHaveText(' Descripción: El usuario esta inactivo o no existe dentro del sistema. Por favor,' +
         ' verifique la información y vuelva a intentarlo. Recomendaciones: Comuníquese con el administrador.');
 });
 
@@ -40,4 +40,16 @@ test('REC-000004 Login as web administrator with an existent user but wrong pass
     await expect(adminLoginPage.alertPopUpTitle).toHaveText('[Error 50]');
     await expect(adminLoginPage.alertPopUpContent).toHaveText('Descripción: Usuario o contraseña incorrecta Recomendaciones: ' +
         'Asegúrese de que no está encendido las mayúsculas');
+});
+
+test('REC-000012 Login as seller in the admin web', async ({ page }) => {
+    const adminLoginPage = new AdminLoginPage(page);
+    await adminLoginPage.navigateToAdminLogin();
+    await adminLoginPage.usernameInput.fill(Users.seller.username || '');
+    await adminLoginPage.passwordInput.fill(Users.seller.password || '');
+    await adminLoginPage.submitButton.click();
+    await expect(adminLoginPage.dashboardTitle).toHaveCount(0);
+    await expect(adminLoginPage.alertPopUpTitle).toHaveText('[Error 640]');
+    await expect(adminLoginPage.alertPopUpContent).toHaveText(' Descripción: El usuario esta inactivo o no existe dentro del sistema. Por favor,' +
+        ' verifique la información y vuelva a intentarlo. Recomendaciones: Comuníquese con el administrador.');
 });
