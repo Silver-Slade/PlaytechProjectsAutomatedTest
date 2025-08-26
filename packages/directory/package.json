@@ -1,0 +1,24 @@
+{
+  "name": "@qa/directory",
+  "version": "0.1.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "playwright test",
+    "test:admin": "playwright test --project=admin",
+    "test:leader": "playwright test --project=leader",
+    "test:dataEntry": "playwright test --project=dataEntry",
+    "report": "playwright show-report playwright-report",
+    "clean:report": "rimraf playwright-report test-results"
+  },
+  "dependencies": {
+    "@qa/framework": "0.1.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "typescript": "^5.9.2",
+    "dotenv-cli": "^7.4.0",
+    "rimraf": "^5.0.0"
+  }
+}
