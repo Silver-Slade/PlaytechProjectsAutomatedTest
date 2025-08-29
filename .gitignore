@@ -16,3 +16,5 @@ packages/*/.env.*
 !packages/*/.env.example
 !.env.example
 packages/**/.env
+**/playwright-report/
+**/test-results/
