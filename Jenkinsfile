@@ -231,8 +231,8 @@ pipeline {
                     >> "packages\\%PROJECT%\\.env" echo BASE_URL_SELLER=http://pruebas.recargameonline.co/RecargamePos/index.php
                     >> "packages\\%PROJECT%\\.env" echo USERNAME_ADMIN=%ADM_USER%
                     >> "packages\\%PROJECT%\\.env" echo PASSWORD_ADMIN=%ADM_PASS%
-                    >> "packages\\%PROJECT%\\.env" echo USERNAME_SELLER=%SELL_USER%
-                    >> "packages\\%PROJECT%\\.env" echo PASSWORD_SELLER=%SELL_PASS%
+                    >> "packages\\%PROJECT%\\.env" echo USERNAME_SELLER=%SEL_USER%
+                    >> "packages\\%PROJECT%\\.env" echo PASSWORD_SELLER=%SEL_PASS%
                   """
                 }
                 break
