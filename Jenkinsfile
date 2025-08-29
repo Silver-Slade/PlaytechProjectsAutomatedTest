@@ -35,8 +35,8 @@ pipeline {
           def jobSlug = slugify(jobName)
 
           def JOB_TO_PROJECT = [
-            'pipeline-recargame-qa-automated-test' : 'recargame',
-            'pipeline-directory-qa-automated-test' : 'directory'
+            'recargame-qa-automated-test' : 'recargame',
+            'directory-qa-automated-test' : 'directory'
           ]
 
           def projectKey = JOB_TO_PROJECT[jobSlug]
