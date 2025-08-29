@@ -61,41 +61,74 @@ pipeline {
         script {
           if (isUnix()) {
             sh '''
+              set -e
+              echo "[1/7] node -v"
               node -v
+              echo "[2/7] npm -v"
               npm -v
+
+              echo "[3/7] npm ci"
               export NPM_CONFIG_PRODUCTION=false
               export NODE_ENV=development
-              npm ci
+              npm ci  --no-audit --fund=false
 
+              echo "[4/7] Ensure TypeScript"
               if [ ! -f node_modules/typescript/bin/tsc ]; then
                 echo "TypeScript no encontrado, instalando..."
                 npm install --save-dev typescript
               else
                 echo "TypeScript ya está instalado."
               fi
-
+              npx -y -W tsc --version || true
               npm list typescript || echo "TypeScript no está instalado"
+
+              echo "[5/7] Set Playwright browser cache path"
+              export PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers
+              mkdir -p "$PLAYWRIGHT_BROWSERS_PATH"
+
+              echo "[6/7] Playwright CLI version"
+              npx -y -W playwright@1.55.0 --version || true
+
               npx -W tsc --version
               npx -W typescript --version
               npx -W playwright install --with-deps
             '''
           } else {
-            bat 'set NPM_CONFIG_PRODUCTION=false'
-            bat 'set NODE_ENV=development'
-            bat 'npm ci'
+            withEnv([
+              'NPM_CONFIG_PRODUCTION=false',
+              'NODE_ENV=development',
+              'PLAYWRIGHT_BROWSERS_PATH=C:\\playwright-browsers'
+            ]) {
+              // [1] versiones
+              bat 'echo [1/10] node -v'
+              bat 'node -v'
+              bat 'echo [1/10] npm -v'
+              bat 'npm -v'
 
-            bat '''
-              IF EXIST node_modules\\typescript\\bin\\tsc.cmd (
-                echo TypeScript ya está instalado.
-              ) ELSE (
-                echo Installing missing TypeScript...
-                npm install --save-dev typescript
-              )
-            '''
+              // [2] npm ci (sin auditoría ni fund para evitar prompts/red extra)
+              bat 'echo [2/10] npm ci'
+              bat 'npm ci --no-audit --fund=false'
 
-            bat 'npm list typescript || echo "TypeScript no está instalado"'
-            bat 'npx -W tsc --version'
-            bat 'npx -W playwright install'
+              // [3] asegurar TypeScript
+              bat 'echo [3/10] Ensure TypeScript'
+              bat 'IF EXIST node_modules\\typescript\\bin\\tsc.cmd ( echo TS OK ) ELSE ( npm install --save-dev typescript )'
+              bat 'npx -y -W tsc --version'
+
+              // [4] preparar cache de browsers (persistente entre builds)
+              bat 'echo [4/10] Set Playwright browser cache path'
+              bat 'if not exist "C:\\playwright-browsers" mkdir "C:\\playwright-browsers"'
+
+              // [5] verificar versión de Playwright CLI
+              bat 'echo [5/10] Playwright CLI version'
+              bat 'npx -y -W playwright@1.55.0 --version'
+
+              // [6] instalar browsers (solo chromium para rapidez; ajusta si necesitas más)
+              bat 'echo [6/10] Install browsers (chromium only)'
+              bat 'npx -y -W playwright@1.55.0 install chromium --network-timeout=600000'
+
+              // [7] done
+              bat 'echo [7/10] Done install stage'
+            }
           }
         }
       }
