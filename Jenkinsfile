@@ -3,9 +3,10 @@ import java.text.Normalizer
 @NonCPS
 String slugify(String s) {
   def n = Normalizer.normalize(s, Normalizer.Form.NFD)
-  n = n.replaceAll("\\p{InCombiningDiacriticalMarks}+", "")
-  n = n.replaceAll("[^A-Za-z0-9]+", "-").toLowerCase()
-  return n.replaceAll("(^-|-$)", "")
+  n = n.replaceAll('\\p{InCombiningDiacriticalMarks}+', '') 
+  n = n.replaceAll('[^A-Za-z0-9]+', '-').toLowerCase()
+  n = n.replaceAll('^-+|-+$', '')
+  return n
 }
 
 pipeline {
