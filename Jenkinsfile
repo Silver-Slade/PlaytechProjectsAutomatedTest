@@ -124,7 +124,7 @@ pipeline {
 
               // [6] instalar browsers (solo chromium para rapidez; ajusta si necesitas más)
               bat 'echo [6/10] Install browsers (chromium only)'
-              bat 'npx -y -W playwright@1.55.0 install chromium --network-timeout=600000'
+              bat 'npx -y -W playwright@1.55.0 install chromium'
 
               // [7] done
               bat 'echo [7/10] Done install stage'
