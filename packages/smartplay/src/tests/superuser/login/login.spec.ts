@@ -48,5 +48,3 @@ test('SMP-000005 Login with a seller account', async ({ page }) => {
     await expect(adminLoginPage.alertPopUpContent).toBeVisible();
     await expect(adminLoginPage.alertPopUpContent).toContainText(`El usuario ${process.env.USERNAME_SELLER} no es un usuario de Sistema Intentelo de nuevo con un usuario del sistema`);
 });
-
-

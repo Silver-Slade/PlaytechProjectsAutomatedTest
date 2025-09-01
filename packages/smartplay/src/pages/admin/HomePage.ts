@@ -18,9 +18,7 @@ constructor(private page: Page) {
     this.resultadoFinalCard = page.locator("#balance2");
     this.balanceOtrosProductosCard = page.locator("#cupoP");
     this.tablaDeResultados = page.locator("#tb-datagrid-sorteoresultados");
-
   }  
-
 }
 
 export default HomePage;
