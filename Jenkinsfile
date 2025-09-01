@@ -223,8 +223,8 @@ pipeline {
                     test -d "packages/$PROJECT" || { echo "No existe packages/$PROJECT"; exit 1; }
                     rm -f packages/$PROJECT/.env
                     cat > packages/$PROJECT/.env <<EOF
-                    BASE_URL_ADMIN=https://qa-smartplay.playtechla.com.co/admin
-                    BASE_URL_SELLER=https://qa-smartplay.playtechla.com.co/seller
+                    BASE_URL_ADMIN=http://pruebas.caribbeants.com:8080/CaribbeanAdmin/app.home.php
+                    BASE_URL_SELLER=http://pruebas.caribbeants.com:8080/CaribbeanPOS/
                     USERNAME_ADMIN=$SP_ADMIN_USER
                     PASSWORD_ADMIN=$SP_ADMIN_PASS
                     USERNAME_SELLER=$SP_SELLER_USER
