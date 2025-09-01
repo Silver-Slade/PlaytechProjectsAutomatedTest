@@ -8,6 +8,8 @@ class HomePage {
   resultadoFinalCard: Locator;
   balanceOtrosProductosCard: Locator;
   tablaDeResultados: Locator;
+  userIconSmartplay: Locator;
+  logoutButton: Locator;
 
 constructor(private page: Page) {
     this.page = page;
@@ -18,7 +20,14 @@ constructor(private page: Page) {
     this.resultadoFinalCard = page.locator("#balance2");
     this.balanceOtrosProductosCard = page.locator("#cupoP");
     this.tablaDeResultados = page.locator("#tb-datagrid-sorteoresultados");
-  }  
+    this.userIconSmartplay = page.locator(".bi-person-fill");
+    this.logoutButton = page.locator("#CerrarSesion");
+  }
+
+  async logout() {
+    await this.userIconSmartplay.click();
+    await this.logoutButton.click();
+  }
 }
 
 export default HomePage;

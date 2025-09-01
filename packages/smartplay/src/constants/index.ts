@@ -9,6 +9,11 @@ export const NonExistentUser = {
     password: 'invalidPassword'
 }
 
+export const BlockedAdminUser = {
+    username: 'dparra',
+    password: '123654'
+}
+
 export type Role = 'admin' | 'seller';
 
 export const Users = {
