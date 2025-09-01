@@ -303,8 +303,8 @@ pipeline {
                     )
                     if exist "packages\\%PROJECT%\\.env" del /q "packages\\%PROJECT%\\.env"
 
-                    >  "packages\\%PROJECT%\\.env" echo BASE_URL=http://pruebas.smartplayonline.co/SmartPlay/index.php
-                    >> "packages\\%PROJECT%\\.env" echo BASE_URL_SELLER=http://pruebas.smartplayonline.co/SmartPlayPos/index.php
+                    >  "packages\\%PROJECT%\\.env" echo BASE_URL_ADMIN=http://pruebas.caribbeants.com:8080/CaribbeanAdmin/app.home.php
+                    >> "packages\\%PROJECT%\\.env" echo BASE_URL_SELLER=http://pruebas.caribbeants.com:8080/CaribbeanPOS/
                     >> "packages\\%PROJECT%\\.env" echo USERNAME_ADMIN=%SP_ADMIN%
                     >> "packages\\%PROJECT%\\.env" echo PASSWORD_ADMIN=%SP_ADMIN_PASS%
                     >> "packages\\%PROJECT%\\.env" echo USERNAME_SELLER=%SP_SELLER%
