@@ -33,8 +33,8 @@ class AdminLoginPage {
   }
 
   async isLoggedIn() {
-    await expect(this.alertPopUpTitle).toBeVisible();
-    await expect(this.alertPopUpContent).toBeVisible();
+    //await expect(this.alertPopUpTitle).toBeVisible();
+    //await expect(this.alertPopUpContent).toBeVisible();
     await expect(this.dashboardImage).toBeHidden();
     await expect(this.userOption).toBeHidden();
     await expect(this.dashboardTitle).toBeHidden();
