@@ -1,4 +1,5 @@
 import { Page, Locator, expect } from "@playwright/test";
+import HomePage  from "./HomePage"
 
 class AdminLoginPage {
   usernameInput: Locator;
@@ -27,17 +28,26 @@ class AdminLoginPage {
   }
 
   async loginAsAdmin() {
-    await this.usernameInput.fill(process.env.USERNAME_ADMIN || "");
-    await this.passwordInput.fill(process.env.PASSWORD_ADMIN || "");
+    await this.usernameInput.fill(process.env.USERNAME_SUPERADMIN || "");
+    await this.passwordInput.fill(process.env.PASSWORD_SUPERADMIN || "");
     await this.submitButton.click();
   }
 
-  async isLoggedIn() {
-    await expect(this.alertPopUpTitle).toBeVisible();
-    await expect(this.alertPopUpContent).toBeVisible();
-    await expect(this.dashboardImage).toBeHidden();
-    await expect(this.userOption).toBeHidden();
-    await expect(this.dashboardTitle).toBeHidden();
+  async isLoggedIn(page: Page) {
+    const homePage = new HomePage(page);
+    await expect(homePage.loteriasCard).toBeVisible();
+    await expect(homePage.premiosCard).toBeVisible();
+    await expect(homePage.netoLoteriaCard).toBeVisible();
+    await expect(homePage.otrosProductosCard).toBeVisible();
+    await expect(homePage.resultadoFinalCard).toBeVisible();
+    await expect(homePage.balanceOtrosProductosCard).toBeVisible();
+    await expect(homePage.tablaDeResultados).toBeVisible();
+    await expect(homePage.loteriasCard).toContainText("Loterías");
+    await expect(homePage.premiosCard).toContainText("Premios");
+    await expect(homePage.netoLoteriaCard).toContainText("Neto lotería");
+    await expect(homePage.otrosProductosCard).toContainText("Otros productos");
+    await expect(homePage.resultadoFinalCard).toContainText("Resultado final");
+    await expect(homePage.balanceOtrosProductosCard).toContainText("Balance otros productos");
   }
 }
 
