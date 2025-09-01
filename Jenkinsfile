@@ -36,7 +36,8 @@ pipeline {
 
           def JOB_TO_PROJECT = [
             'recargame-qa-automated-test' : 'recargame',
-            'directory-qa-automated-test' : 'directory'
+            'directory-qa-automated-test' : 'directory',
+            'smartplay-qa-automated-test' : 'smartplay'
           ]
 
           def projectKey = JOB_TO_PROJECT[jobSlug]
@@ -210,6 +211,34 @@ pipeline {
                   """
                 }
                 break
+              case 'smartplay':
+                withCredentials([
+                  usernamePassword(credentialsId: 'smartplay-admin-creds',  usernameVariable: 'SP_ADMIN_USER', passwordVariable: 'SP_ADMIN_PASS'),
+                  usernamePassword(credentialsId: 'smartplay-seller-creds', usernameVariable: 'SP_SELLER_USER', passwordVariable: 'SP_SELLER_PASS'),
+                  usernamePassword(credentialsId: 'smartplay-superadmin-creds', usernameVariable: 'SP_SUPERADMIN', passwordVariable: 'SP_SUPERADMIN_PASS'),
+                  usernamePassword(credentialsId: 'smartplay-recaudador-creds', usernameVariable: 'SP_RECAUDADOR_USER', passwordVariable: 'SP_RECAUDADOR_PASS'),
+                  usernamePassword(credentialsId: 'smartplay-rifero-creds', usernameVariable: 'SP_RIFERO_USER', passwordVariable: 'SP_RIFERO_PASS')
+                ]) {
+                  sh """
+                    test -d "packages/$PROJECT" || { echo "No existe packages/$PROJECT"; exit 1; }
+                    rm -f packages/$PROJECT/.env
+                    cat > packages/$PROJECT/.env <<EOF
+                    BASE_URL_ADMIN=https://qa-smartplay.playtechla.com.co/admin
+                    BASE_URL_SELLER=https://qa-smartplay.playtechla.com.co/seller
+                    USERNAME_ADMIN=$SP_ADMIN_USER
+                    PASSWORD_ADMIN=$SP_ADMIN_PASS
+                    USERNAME_SELLER=$SP_SELLER_USER
+                    PASSWORD_SELLER=$SP_SELLER_PASS
+                    USERNAME_SUPERADMIN=$SP_SUPERADMIN
+                    PASSWORD_SUPERADMIN=$SP_SUPERADMIN_PASS
+                    USERNAME_RECAUDADOR=$SP_RECAUDADOR_USER
+                    PASSWORD_RECAUDADOR=$SP_RECAUDADOR_PASS
+                    USERNAME_RIFERO=$SP_RIFERO_USER
+                    PASSWORD_RIFERO=$SP_RIFERO_PASS
+                    EOF
+                  """
+                }
+                break
               default:
                 error "Proyecto no soportado: '${env.PROJECT}'"
             }
@@ -256,6 +285,36 @@ pipeline {
                     >> "packages\\%PROJECT%\\.env" echo PASSWORD_LEADER=%LEADER_PASS%
                     >> "packages\\%PROJECT%\\.env" echo USERNAME_DATAENTRY=%DATA_USER%
                     >> "packages\\%PROJECT%\\.env" echo PASSWORD_DATAENTRY=%DATA_PASS%
+                  """
+                }
+                break
+              case 'smartplay':
+                withCredentials([
+                  usernamePassword(credentialsId: 'smartplay-admin-creds', usernameVariable: 'SP_ADMIN', passwordVariable: 'SP_ADMIN_PASS'),
+                  usernamePassword(credentialsId: 'smartplay-seller-creds', usernameVariable: 'SP_SELLER', passwordVariable: 'SP_SELLER_PASS'),
+                  usernamePassword(credentialsId: 'smartplay-superadmin-creds', usernameVariable: 'SP_SUPERADMIN', passwordVariable: 'SP_SUPERADMIN_PASS'),
+                  usernamePassword(credentialsId: 'smartplay-recaudador-creds', usernameVariable: 'SP_RECAUDADOR_USER', passwordVariable: 'SP_RECAUDADOR_PASS'),
+                  usernamePassword(credentialsId: 'smartplay-rifero-creds', usernameVariable: 'SP_RIFERO_USER', passwordVariable: 'SP_RIFERO_PASS')
+                ]) {
+                  bat """
+                    if not exist "packages\\%PROJECT%" (
+                      echo No existe packages\\%PROJECT%
+                      exit /b 1
+                    )
+                    if exist "packages\\%PROJECT%\\.env" del /q "packages\\%PROJECT%\\.env"
+
+                    >  "packages\\%PROJECT%\\.env" echo BASE_URL=http://pruebas.smartplayonline.co/SmartPlay/index.php
+                    >> "packages\\%PROJECT%\\.env" echo BASE_URL_SELLER=http://pruebas.smartplayonline.co/SmartPlayPos/index.php
+                    >> "packages\\%PROJECT%\\.env" echo USERNAME_ADMIN=%SP_ADMIN%
+                    >> "packages\\%PROJECT%\\.env" echo PASSWORD_ADMIN=%SP_ADMIN_PASS%
+                    >> "packages\\%PROJECT%\\.env" echo USERNAME_SELLER=%SP_SELLER%
+                    >> "packages\\%PROJECT%\\.env" echo PASSWORD_SELLER=%SP_SELLER_PASS%
+                    >> "packages\\%PROJECT%\\.env" echo USERNAME_SUPERADMIN=%SP_SUPERADMIN%
+                    >> "packages\\%PROJECT%\\.env" echo PASSWORD_SUPERADMIN=%SP_SUPERADMIN_PASS%
+                    >> "packages\\%PROJECT%\\.env" echo USERNAME_RECAUDADOR=%SP_RECAUDADOR_USER%
+                    >> "packages\\%PROJECT%\\.env" echo PASSWORD_RECAUDADOR=%SP_RECAUDADOR_PASS%
+                    >> "packages\\%PROJECT%\\.env" echo USERNAME_RIFERO=%SP_RIFERO_USER%
+                    >> "packages\\%PROJECT%\\.env" echo PASSWORD_RIFERO=%SP_RIFERO_PASS%
                   """
                 }
                 break
