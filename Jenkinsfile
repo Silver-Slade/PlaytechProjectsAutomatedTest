@@ -17,6 +17,10 @@ pipeline {
     // Future implementation: choice(name: 'SUITE', choices: ['all','admin','seller'], description: 'Sub-suite opcional')
   }
 
+  environment {
+    PLAYWRIGHT_BROWSERS_PATH = "C:\\playwright-browsers"
+  }
+
   options {
     timestamps()
     buildDiscarder(logRotator(numToKeepStr: '20'))
